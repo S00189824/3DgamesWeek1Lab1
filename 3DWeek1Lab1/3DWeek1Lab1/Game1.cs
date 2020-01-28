@@ -62,17 +62,23 @@ namespace _3DWeek1Lab1
 
         void UpdateView()
         {
-            view = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, -1), Vector3.Up);
+            view = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 10), Vector3.Up);
         }
 
         void CreateColorVertices()
         {
-            colorVertives = new VertexPositionColor[3];
+            colorVertives = new VertexPositionColor[6];
 
             //instantiate the 3 vertices -> position and color
-            colorVertives[0] = new VertexPositionColor(new Vector3(1,0,0),Color.ForestGreen);
-            colorVertives[1] = new VertexPositionColor(new Vector3(-1,0,0),Color.BlanchedAlmond);
-            colorVertives[2] = new VertexPositionColor(new Vector3(0,1,0),Color.Violet);
+            colorVertives[0] = new VertexPositionColor(new Vector3(-2,-1,0),Color.ForestGreen);
+            colorVertives[1] = new VertexPositionColor(new Vector3(0,2,1),Color.BlanchedAlmond);
+            colorVertives[2] = new VertexPositionColor(new Vector3(2,-1,0),Color.Violet);
+
+            colorVertives[3] = new VertexPositionColor(new Vector3(2,-1,0),Color.Violet);
+            colorVertives[4] = new VertexPositionColor(new Vector3(0,2,-1),Color.Violet);
+            colorVertives[5] = new VertexPositionColor(new Vector3(0,-1,-3),Color.Violet);
+
+            
 
             colorEffect = new BasicEffect(GraphicsDevice);
             colorEffect.VertexColorEnabled = true;
@@ -89,6 +95,8 @@ namespace _3DWeek1Lab1
             textureVertices[1] = new VertexPositionTexture(new Vector3(-1, 0, 0),new Vector2(0,1));
             textureVertices[2] = new VertexPositionTexture(new Vector3(0, 1, 0), new Vector2(0.5f,0.5f));
 
+            
+
             textureEffesct = new BasicEffect(GraphicsDevice);
             textureEffesct.TextureEnabled = true;
             textureEffesct.Texture = texture;
@@ -97,7 +105,7 @@ namespace _3DWeek1Lab1
         protected override void LoadContent()
         {
             CreateColorVertices();
-            CreateTextureVertices();
+            //CreateTextureVertices();
         }
 
         
@@ -112,10 +120,21 @@ namespace _3DWeek1Lab1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //if(Keyboard.GetState().IsKeyDown(Keys.D))
+            //{
+            //    ColourWorld *= Matrix.CreateRotationY(MathHelper.ToRadians(1));
+
+            //}
+            //else if(Keyboard.GetState().IsKeyDown(Keys.A))
+            //{
+            //    ColourWorld *= Matrix.CreateRotationY(MathHelper.ToRadians(-1));
+            //}
+
             UpdateView();
             textureWorld *= Matrix.CreateRotationY(MathHelper.ToRadians(5.9f));
             textureWorld *= Matrix.CreateRotationX(MathHelper.ToRadians(5.5f));
             textureWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(5.5f));
+            
             base.Update(gameTime);
         }
 
@@ -157,7 +176,7 @@ namespace _3DWeek1Lab1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             DrawColorTriangle();
-            DrawVert();
+            //DrawVert();
             base.Draw(gameTime);
         }
     }
